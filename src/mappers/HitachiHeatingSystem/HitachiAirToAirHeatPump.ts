@@ -5,6 +5,7 @@ import HeatingSystem from '../HeatingSystem';
 export default class HitachiAirToAirHeatPump extends HeatingSystem {
     protected MIN_TEMP = 16;
     protected MAX_TEMP = 30;
+    protected MIN_STEP = 1;
     protected TARGET_MODES = [
         Characteristics.TargetHeatingCoolingState.AUTO,
         Characteristics.TargetHeatingCoolingState.HEAT,
