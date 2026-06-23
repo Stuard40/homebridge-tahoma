@@ -1,7 +1,7 @@
 {
   "name": "homebridge-tahoma-fork",
   "displayName": "Homebridge TaHoma Fork",
-  "version": "2.2.62-fork.1",
+  "version": "2.2.62",
   "description": "Sample Platform plugin for TaHoma and Cozytouch services (Somfy,Atlantic,Thermor,Sauter): https://github.com/Stuard40/homebridge-tahoma",
   "author": "Romain DUBOC <dubocr@gmail.com>",
   "license": "Apache-2.0",
