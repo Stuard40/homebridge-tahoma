@@ -23,6 +23,7 @@ export default class HitachiAirToAirHeatPump extends HeatingSystem {
 
         const fanService = this.registerService(Services.Fan, 'Fan');
         this.fanService = fanService;
+        fanService.setCharacteristic(Characteristics.Name, this.device.label + ' Fan');
 
         this.fanOn = fanService.getCharacteristic(Characteristics.On);
         this.fanOn.onSet(async (value) => {
