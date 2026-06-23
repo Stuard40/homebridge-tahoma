@@ -36,7 +36,7 @@ export default class HitachiAirToAirHeatPump extends HeatingSystem {
         this.rotationSpeed = fanService.getCharacteristic(Characteristics.RotationSpeed);
         this.rotationSpeed.updateValue(100);
         this.rotationSpeed.setProps({
-            minValue: 20,
+            minValue: 0,
             maxValue: 100,
             minStep: 20,
         });
@@ -48,11 +48,13 @@ export default class HitachiAirToAirHeatPump extends HeatingSystem {
 
     protected async setRotationSpeed(value) {
         let fanMode = 'auto';
-        switch (value) {
+        const speed = Math.round(value / 20) * 20;
+        switch (speed) {
+            case 0:
             case 20: fanMode = 'silent'; break;
-            case 40: fanMode = 'low'; break;
-            case 60: fanMode = 'medium'; break;
-            case 80: fanMode = 'high'; break;
+            case 40: fanMode = 'lo'; break;
+            case 60: fanMode = 'med'; break;
+            case 80: fanMode = 'hi'; break;
             case 100: fanMode = 'auto'; break;
         }
 
@@ -108,9 +110,18 @@ export default class HitachiAirToAirHeatPump extends HeatingSystem {
                 let speed = 100;
                 switch (value?.toLowerCase()) {
                     case 'silent': speed = 20; break;
-                    case 'low': speed = 40; break;
-                    case 'medium': speed = 60; break;
-                    case 'high': speed = 80; break;
+                    case 'low':
+                    case 'lo':
+                        speed = 40;
+                        break;
+                    case 'medium':
+                    case 'med':
+                        speed = 60;
+                        break;
+                    case 'high':
+                    case 'hi':
+                        speed = 80;
+                        break;
                     case 'auto': speed = 100; break;
                 }
                 this.rotationSpeed?.updateValue(speed);
@@ -121,11 +132,14 @@ export default class HitachiAirToAirHeatPump extends HeatingSystem {
     private getCommands(state, temperature) {
         let fanMode = 'auto';
         if (this.rotationSpeed) {
-            switch (this.rotationSpeed.value) {
+            const value = Number(this.rotationSpeed.value);
+            const speed = Math.round(value / 20) * 20;
+            switch (speed) {
+                case 0:
                 case 20: fanMode = 'silent'; break;
-                case 40: fanMode = 'low'; break;
-                case 60: fanMode = 'medium'; break;
-                case 80: fanMode = 'high'; break;
+                case 40: fanMode = 'lo'; break;
+                case 60: fanMode = 'med'; break;
+                case 80: fanMode = 'hi'; break;
                 case 100: fanMode = 'auto'; break;
             }
         }
