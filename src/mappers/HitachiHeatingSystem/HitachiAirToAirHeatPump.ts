@@ -8,7 +8,6 @@ export default class HitachiAirToAirHeatPump extends HeatingSystem {
     protected MAX_TEMP = 30;
     protected MIN_STEP = 1;
     protected TARGET_MODES = [
-        Characteristics.TargetHeatingCoolingState.AUTO,
         Characteristics.TargetHeatingCoolingState.HEAT,
         Characteristics.TargetHeatingCoolingState.COOL,
         Characteristics.TargetHeatingCoolingState.OFF,
@@ -30,7 +29,7 @@ export default class HitachiAirToAirHeatPump extends HeatingSystem {
             if (value === this.fanOn?.value) {
                 return;
             }
-            const targetState = value ? Characteristics.TargetHeatingCoolingState.AUTO : Characteristics.TargetHeatingCoolingState.OFF;
+            const targetState = value ? Characteristics.TargetHeatingCoolingState.COOL : Characteristics.TargetHeatingCoolingState.OFF;
             await this.setTargetState(targetState);
         });
 
@@ -96,11 +95,11 @@ export default class HitachiAirToAirHeatPump extends HeatingSystem {
                     switch (this.device.get('ovp:ModeChangeState')?.toLowerCase()) {
                         case 'auto cooling':
                             this.currentState?.updateValue(Characteristics.CurrentHeatingCoolingState.COOL);
-                            this.targetState?.updateValue(Characteristics.TargetHeatingCoolingState.AUTO);
+                            this.targetState?.updateValue(Characteristics.TargetHeatingCoolingState.COOL);
                             break;
                         case 'auto heating':
                             this.currentState?.updateValue(Characteristics.CurrentHeatingCoolingState.HEAT);
-                            this.targetState?.updateValue(Characteristics.TargetHeatingCoolingState.AUTO);
+                            this.targetState?.updateValue(Characteristics.TargetHeatingCoolingState.HEAT);
                             break;
                         case 'cooling':
                             this.currentState?.updateValue(Characteristics.CurrentHeatingCoolingState.COOL);
