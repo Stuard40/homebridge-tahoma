@@ -17,6 +17,7 @@ export default class HitachiAirToAirHeatPump extends HeatingSystem {
     protected fanService: Service | undefined;
     protected fanOn: Characteristic | undefined;
     protected rotationSpeed: Characteristic | undefined;
+    private fanDebounceTimer: any = null;
 
     protected registerServices(): Array<Service> {
         const services = super.registerServices();
@@ -40,10 +41,22 @@ export default class HitachiAirToAirHeatPump extends HeatingSystem {
             maxValue: 100,
             minStep: 20,
         });
-        this.rotationSpeed.onSet(this.setRotationSpeed.bind(this));
+        this.rotationSpeed.onSet(this.debounceFan(this.setRotationSpeed));
 
         services.push(fanService);
         return services;
+    }
+
+    protected debounceFan(task) {
+        return async (value) => {
+            if (this.fanDebounceTimer !== null) {
+                clearTimeout(this.fanDebounceTimer);
+            }
+            this.fanDebounceTimer = setTimeout(async () => {
+                this.fanDebounceTimer = null;
+                task.bind(this, value)().catch(() => null);
+            }, 500);
+        };
     }
 
     protected async setRotationSpeed(value) {
