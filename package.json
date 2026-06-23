@@ -1,13 +1,13 @@
 {
-  "name": "homebridge-tahoma",
-  "displayName": "Homebridge TaHoma",
-  "version": "2.2.61",
-  "description": "Sample Platform plugin for TaHoma and Cozytouch services (Somfy,Atlantic,Thermor,Sauter): https://github.com/dubocr/homebridge-tahoma",
+  "name": "homebridge-tahoma-fork",
+  "displayName": "Homebridge TaHoma Fork",
+  "version": "2.2.62-fork.1",
+  "description": "Sample Platform plugin for TaHoma and Cozytouch services (Somfy,Atlantic,Thermor,Sauter): https://github.com/Stuard40/homebridge-tahoma",
   "author": "Romain DUBOC <dubocr@gmail.com>",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dubocr/homebridge-tahoma.git"
+    "url": "https://github.com/Stuard40/homebridge-tahoma.git"
   },
   "bugs": {
     "url": "https://github.com/dubocr/homebridge-tahoma/issues"
@@ -43,6 +43,7 @@
     "@typescript-eslint/parser": "^8.13.0",
     "eslint": "^9.14.0",
     "homebridge": "^1.8.5",
+    "homebridge-config-ui-x": "^4.50.6",
     "nodemon": "^3.1.7",
     "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
