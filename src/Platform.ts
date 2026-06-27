@@ -60,6 +60,19 @@ export class Platform implements DynamicPlatformPlugin {
         });
         this.client = new Client(logger, config);
 
+        const clientApi = this.client['api'];
+        if (clientApi) {
+            const originalConnect = clientApi.connect;
+            clientApi.connect = async function (this: any, ...args: any[]) {
+                try {
+                    return await originalConnect.apply(this, args);
+                } catch (error) {
+                    this.connectPromise = undefined;
+                    throw error;
+                }
+            };
+        }
+
         // When this event is fired it means Homebridge has restored all cached accessories from disk.
         // Dynamic Platform plugins should only register new accessories after this event was fired,
         // in order to ensure they weren't added to homebridge already. This event can also be used
